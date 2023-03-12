@@ -50,8 +50,9 @@ class _ProfilepageState extends State<Profilepage> {
           
            const Padding(
             padding:  EdgeInsets.fromLTRB(20,50,0,0),
-            child: Text("Phone Number: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+            child: Text("Phone Number: 0911111111", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
           ),
+          
 
         ],
       ),

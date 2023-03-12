@@ -52,15 +52,19 @@ class _CartState extends State<Cart> {
             );
           } else if (state is ItemLoadedState) {
             if (state.cart.isEmpty) {
-              return const Center(
-                  child: Text(
-                "NO HISTORY To SHOW!\n TOTAL: 0\$",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900,
-                ),
-              ));
+              return Scaffold(
+                backgroundColor: Colors.black,
+                body:  Center(
+                    child: Text(
+                  "No items have been added please add items from the home page",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white
+                  ),
+                )),
+              );
             } else {
               // ignore: non_constant_identifier_names
               num TotalPrice = 0;

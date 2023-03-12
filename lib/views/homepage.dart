@@ -59,7 +59,8 @@ class _homepage extends State<homePage> {
                   padding:
                       const EdgeInsets.all(24.0),
                   textStyle: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white)),
+                      fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white)
+                      ),
                   child: const Text("Get started"),),
             
 
