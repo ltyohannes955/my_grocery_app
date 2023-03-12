@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:mobile_number/mobile_number.dart';
+import 'package:flutter/services.dart';
 class Profilepage extends StatefulWidget {
    Profilepage({super.key});
 
@@ -8,6 +9,44 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
+  String _mobileNumber = '';
+  List<SimCard> _simCard = <SimCard>[];
+
+  @override
+  void initState() {
+    super.initState();
+    MobileNumber.listenPhonePermission((isPermissionGranted) {
+      if (isPermissionGranted) {
+        initMobileNumberState();
+      } else {}
+    });
+
+    initMobileNumberState();
+  }
+
+  Future<void> initMobileNumberState() async {
+    if (!await MobileNumber.hasPhonePermission) {
+      await MobileNumber.requestPhonePermission;
+      return;
+    }
+    try {
+      _mobileNumber = (await MobileNumber.mobileNumber)!;
+      _simCard = (await MobileNumber.getSimCards)!;
+    } on PlatformException catch (e) {
+      debugPrint("Failed to get mobile number because of '${e.message}'");
+    }
+    if (!mounted) return;
+
+    setState(() {});
+  }
+
+  Widget fillCards() {
+    List<Widget> widgets = _simCard
+        .map((SimCard sim) => Text(
+            'Sim Card Number: (${sim.countryPhonePrefix}) - ${sim.number}\nCarrier Name: ${sim.carrierName}\nCountry Iso: ${sim.countryIso}\nDisplay Name: ${sim.displayName}\nSim Slot Index: ${sim.slotIndex}\n\n'))
+        .toList();
+    return Column(children: widgets);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,17 +79,17 @@ class _ProfilepageState extends State<Profilepage> {
           ),
           const Padding(
             padding:  EdgeInsets.fromLTRB(20,80,0,0),
-            child: Text('Name: "Name"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),),
+            child: Text('Name: "Leul Yohannes"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),),
           ),
          
            const Padding(
             padding:  EdgeInsets.fromLTRB(20,50,0,0),
-            child: Text('Email: "Email@gmail.com"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),),
+            child: Text('Email: "leulyohannes85@gmail.com"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),),
           ),
           
-           const Padding(
+            Padding(
             padding:  EdgeInsets.fromLTRB(20,50,0,0),
-            child: Text("Phone Number: 0911111111", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+            child: Text("PhoneNO: " "+$_mobileNumber",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),)
           ),
           
 
