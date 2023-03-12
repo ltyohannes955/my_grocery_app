@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_grocery_app/views/cart.dart';
+import 'package:my_grocery_app/views/cartssss.dart';
 
 import 'package:my_grocery_app/views/homePage.dart';
 import 'package:my_grocery_app/views/profile.dart';
 
-
 import 'bloc/item bloc/item_bloc.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -17,27 +15,20 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-
-      title: 'grocery',
-      
-      home: BlocProvider(
-        create: (context) => ItemBloc(),
-        child:  homePage(),
-        ),
-      routes: {
-
-      '/profile':(context) => Profilepage(),
-      '/cart':(context) => Cart(),
-       },
-      
-      );
-      
-
+    return BlocProvider(
+      create: (context) => ItemBloc(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'grocery',
+        
+        routes: {
+          '/':(context) => homePage(),
+          '/profile': (context) => Profilepage(),
+          '/cart': (context) => Cart(),
+        },
+      ),
+    );
   }
 }
-

@@ -19,5 +19,6 @@ class ItemLoadingState extends ItemState {
 
 class ItemLoadedState extends ItemState {
   final List item;
-  const ItemLoadedState({required this.item});
+  final List cart;
+  const ItemLoadedState({required this.item, required this.cart});
 }

@@ -11,12 +11,14 @@ class _ProfilepageState extends State<Profilepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        
         iconTheme: IconThemeData(
-    color: Colors.black, //change your color here
+    color: Colors.white, //change your color here
   ),
-        title: const Text('Asbeza', style: TextStyle(color: Colors.black),),
-        backgroundColor: Colors.white
+        title: const Text('Asbeza', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.black
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,22 +35,22 @@ class _ProfilepageState extends State<Profilepage> {
                 shape: BoxShape.circle,
                 color: Colors.grey
               ),
-              child: Icon(Icons.person, size: 80,),),
+              child: Icon(Icons.person, size: 80, color: Colors.white,),),
             
           ),
           const Padding(
-            padding:  EdgeInsets.fromLTRB(20,0,0,0),
-            child: Text('Name: "Name"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            padding:  EdgeInsets.fromLTRB(20,80,0,0),
+            child: Text('Name: "Name"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),),
           ),
          
            const Padding(
             padding:  EdgeInsets.fromLTRB(20,50,0,0),
-            child: Text('Email: "Email@gmail.com"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            child: Text('Email: "Email@gmail.com"',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),),
           ),
           
            const Padding(
             padding:  EdgeInsets.fromLTRB(20,50,0,0),
-            child: Text("Phone Number: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            child: Text("Phone Number: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
           ),
 
         ],

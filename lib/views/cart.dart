@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/card bloc/card_bloc.dart';
+import '../bloc/item bloc/item_bloc.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -11,66 +11,175 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  int index = 0;
+  int _count = 1;
+
+  void _increment(){
+    setState((){
+      _count++;
+    });
+  }
+
+  void _decrement(){
+    if(_count < 2){
+      return;
+    }
+    setState(() {
+      _count--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<CartBloc, CartState>(
-        builder: (context, state){
-          if (state is CartInitial) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              child: const Text("No Items Added Please add items first!"),
+      backgroundColor: Colors.white,
+      
+      body: BlocBuilder<ItemBloc, ItemState>(
+        builder: (context, state) {
+          if (state is ItemInitalState) {
+            return const Center(
+                child: Text(
+              "NO HISTORY TO SHOW!\n TOTAL: 0\$",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+              ),
+            ));
+          }
+          if (state is ItemLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }
-          else if(state is CartLoadingState){
-            return const Center(child: CircularProgressIndicator(),);
-          }
-          else if (state is CartLoadedState){
-            return ListView.builder(
-              itemCount: state.item.length,
-              itemBuilder: (context, index) {
-                final itemVal = state.item[index];
-                return Card(
-                    elevation: 20,
-                    child: Container(
-                    width: 380,
-                    height: 150,
-                    color: Colors.white,
-                    margin: const EdgeInsets.fromLTRB(58,10,0,0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      Image.network(itemVal.image,width: 100, ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               SizedBox(
-                                width: MediaQuery.of(context).size.width * .4,
-                                child: Text.rich(
-                                  TextSpan(
-                                  children: <TextSpan>[ TextSpan(text: 'Item name: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                                  TextSpan(text: itemVal.title ,style: TextStyle(fontSize: 15)),]))),
-                                
-                             ],
-                           )
-                        ],
-                      )
-                    ]),
-                    
-                    ),
-                  );
-              },);
-          }
+          } else if (state is ItemLoadedState) {
+            if (state.cart.isEmpty) {
+              return const Center(
+                  child: Text(
+                "NO HISTORY To SHOW!\n TOTAL: 0\$",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                ),
+              ));
+            } else {
+              // ignore: non_constant_identifier_names
+              num TotalPrice = 0;
+              // ignore: no_leading_underscores_for_local_identifiers
+              void _incrementCounter() {
+                for (var element in state.cart) {
+                  TotalPrice += element.price;
+                }
+              }
 
+              _incrementCounter();
+              return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+    color: Colors.white,
+  ),
+        title: const Text('Asbeza', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.black,
+        actions: [
+          
+            IconButton(onPressed: () {
+              Navigator.pushNamed(context, '/profile');
+            }, icon: const Icon(Icons.person), color: Colors.blue,)
+        ],
+      ),
+      body: Column(
+        children: [
+          
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+              height: MediaQuery.of(context).size.height * .80,
+            child: ListView.builder(
+              itemCount: state.cart.length,
+              itemBuilder: (BuildContext context, int index) {
+                final itemVal = state.cart[index];
+                return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Card(
+                              elevation: 20,
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                              child: Container(
+                              width: 38,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(20)
+                              ),
+                              
+                              margin: const EdgeInsets.fromLTRB(0,0,0,0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                                  child: Image.network(itemVal.image,width: 80, ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                     Row(
+                                       children: [
+                                         Padding(
+                                           padding: const EdgeInsets.all(8.0),
+                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                             children: [
+                                              
+                                               SizedBox(
+                                                width: MediaQuery.of(context).size.width * .4,
+                                                 child: Text.rich(
+                                                   TextSpan(
+                                                   children: <TextSpan>[ TextSpan(text: 'Item name: ', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                                   TextSpan(text: '${itemVal.title}\$' ,style: TextStyle(fontSize: 15, color: Colors.white)),])),
+                                               ),
+                                                  Text.rich(TextSpan(
+                                                    children:<TextSpan>[
+                                                    TextSpan(
+                                                    text: "Price: ", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)), 
+                                                    TextSpan(text: "${itemVal.price}\$" ,style: TextStyle( color: Colors.white))])),
+            
+                                                    
+                                             ],
+                                           ),
+                                         ),
+                                        
+                                       ],
+                                     )
+                                  ],
+                                ),
+                                
+                              ]),
+                              
+                              ),
+                            ),
+                            
+              );
+              
+            
+                  }),
+          ),
+           Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Total: ${TotalPrice.toStringAsFixed(2)}\$",
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),     
+        ],
+      ),
+            
+    
+    );
+            }
+          }
           return Container();
-        }
+        },
       ),
     );
   }
