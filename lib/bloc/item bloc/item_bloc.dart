@@ -13,7 +13,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   final _apiService = apiservice();
   List cart = [];
   ItemBloc() : super(ItemInitalState()) {
-    on<GetDataButtonPressed>((event, emit) async{
+    on<GetItem>((event, emit) async{
       emit(ItemLoadingState());
 
       try{
@@ -26,6 +26,14 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       
     });
     on<CartEvent>((event, emit) => {cart.add(event.data)
+    });
+
+    on<IncrementQunatity>((event, emit) => {cart[event.data].quantity++},);
+    on<DecrementQuantity>((event, emit) => {
+      if(cart[event.data].quantity > 1){
+          cart[event.data].quantity--,
+      }
+      
     });
   }
 }

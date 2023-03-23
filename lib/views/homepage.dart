@@ -36,36 +36,8 @@ class _homepage extends State<homePage> {
       ),
       body: BlocBuilder<ItemBloc, ItemState>(builder: (context, state){
         if (state is ItemInitalState){
-          return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 100, 80, 50),
-            child: Image.asset('assets/images/cart.jpg', width: 150,),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Text("We deliver groceries at your doorstep", 
-            style: TextStyle(color: Colors.white, fontSize: 40,),
-            textAlign: TextAlign.center,),
-          ),
-          
-          const Spacer(),
-
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<ItemBloc>(context)
-                      .add(GetDataButtonPressed());
-            }, style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.all(24.0),
-                  textStyle: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white)
-                      ),
-                  child: const Text("Get started"),),
-            
-
-          const Spacer()
-      ]);
+          BlocProvider.of<ItemBloc>(context)
+                      .add(GetItem());
         }
         else if(state is ItemLoadingState){
           return const Center(child: CircularProgressIndicator(),);

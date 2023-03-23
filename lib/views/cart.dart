@@ -11,22 +11,22 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  int _count = 1;
+  // int _count = 1;
 
-  void _increment(){
-    setState((){
-      _count++;
-    });
-  }
+  // void _increment(){
+  //   setState((){
+  //     _count++;
+  //   });
+  // }
 
-  void _decrement(){
-    if(_count < 2){
-      return;
-    }
-    setState(() {
-      _count--;
-    });
-  }
+  // void _decrement(){
+  //   if(_count < 2){
+  //     return;
+  //   }
+  //   setState(() {
+  //     _count--;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class _CartState extends State<Cart> {
               // ignore: no_leading_underscores_for_local_identifiers
               void _incrementCounter() {
                 for (var element in state.cart) {
-                  TotalPrice += element.price;
+                  TotalPrice += (element.price * element.quantity);
                 }
               }
 
@@ -146,6 +146,23 @@ class _CartState extends State<Cart> {
                                                     TextSpan(
                                                     text: "Price: ", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)), 
                                                     TextSpan(text: "${itemVal.price}\$" ,style: TextStyle( color: Colors.white))])),
+                                                    Row(
+                                                      children: [
+                                                        IconButton(onPressed: (() {
+                                                            BlocProvider.of<ItemBloc>(context).add(DecrementQuantity(index));
+                                                            setState(() {});
+                                                          }), icon: const Icon(Icons.remove_circle), color: Colors.blue, iconSize: 30,),
+                                                      Text("${itemVal.quantity}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                                      ),
+                                                      IconButton(onPressed: (() {
+                                                        BlocProvider.of<ItemBloc>(context).add(IncrementQunatity(index));
+                                                        setState(() {});
+                                                      }), 
+                                                      icon: const Icon(Icons.add_circle), 
+                                                      color: Colors.blue, iconSize: 30,),
+                                                      ],
+                                                    ),
+                                                      
             
                                                     
                                              ],

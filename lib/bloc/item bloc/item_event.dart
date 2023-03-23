@@ -7,7 +7,8 @@ abstract class ItemEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetDataButtonPressed extends ItemEvent{
+class GetItem extends ItemEvent{
+  const GetItem();
   
   @override
   List<Object> get props => [];
@@ -21,4 +22,24 @@ class CartEvent extends ItemEvent {
   List<Object> get props => [];
 
   get data => item;
+}
+
+class IncrementQunatity extends ItemEvent{
+  final int index;
+  IncrementQunatity(this.index);
+
+  @override
+  List<Object> get props => [];
+
+  get data => index;
+}
+
+class DecrementQuantity extends ItemEvent{
+  final int index;
+  DecrementQuantity(this.index);
+
+  @override
+  List<Object> get props => [];
+
+  get data => index;
 }

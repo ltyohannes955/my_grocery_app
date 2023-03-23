@@ -5,6 +5,7 @@ class Item{
   String description;
   String category;
   String image;
+  int quantity;
 
 Item({
   required this.id,
@@ -13,6 +14,7 @@ Item({
   required this.description,
   required this.category,
   required this.image,
+  required this.quantity,
 
 
 
@@ -27,6 +29,7 @@ factory Item.fromjson(Map<String, dynamic>parsedjson){
     description: parsedjson['description'],
     category: parsedjson['category'],
     image: parsedjson['image'],
+    quantity: 1
   );
 }
 
