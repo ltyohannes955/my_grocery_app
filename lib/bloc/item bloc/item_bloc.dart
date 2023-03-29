@@ -35,5 +35,8 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       }
       
     });
+    on<ItemRemoveEvent>((event, emit) => {
+      cart.removeAt(event.data),
+    });
   }
 }

@@ -43,3 +43,15 @@ class DecrementQuantity extends ItemEvent{
 
   get data => index;
 }
+
+class ItemRemoveEvent extends ItemEvent{
+  final int index;
+  ItemRemoveEvent(
+    this.index,
+  );
+
+  @override
+  List<Object> get props => [];
+
+  get data => index;
+}

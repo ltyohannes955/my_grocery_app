@@ -11,22 +11,6 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  // int _count = 1;
-
-  // void _increment(){
-  //   setState((){
-  //     _count++;
-  //   });
-  // }
-
-  // void _decrement(){
-  //   if(_count < 2){
-  //     return;
-  //   }
-  //   setState(() {
-  //     _count--;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -160,6 +144,11 @@ class _CartState extends State<Cart> {
                                                       }), 
                                                       icon: const Icon(Icons.add_circle), 
                                                       color: Colors.blue, iconSize: 30,),
+                                                      IconButton(onPressed: (){
+                                                        BlocProvider.of<ItemBloc>(context)
+                                                            .add(ItemRemoveEvent(index));
+                                      setState(() {});
+                                                      }, icon: const Icon(Icons.delete), color: Colors.red,)
                                                       ],
                                                     ),
                                                       
