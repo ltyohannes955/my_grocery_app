@@ -12,6 +12,11 @@ class homePage extends StatefulWidget {
 }
 
 class _homepage extends State<homePage> {
+  int addedItems = 0;
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
   
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,7 @@ class _homepage extends State<homePage> {
           return const Center(child: CircularProgressIndicator(),);
         }
         else if (state is ItemLoadedState){
+          // addedItems = state.cart.length;
           return ListView.builder(
             itemCount: state.item.length,
             itemBuilder: (BuildContext context, int index) {
