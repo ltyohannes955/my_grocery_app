@@ -21,11 +21,11 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
       try{
         final activity = await _apiService.featchitem();
-        //  await _Service.readitem().then((val)=>{
-        //   cart = val,
-        // });
-        // cartLoad = Item.cartList(cart);
-        emit(ItemLoadedState(item: activity!, cart: cart));
+         await _Service.readitem().then((val)=>{
+          cart = val,
+        });
+        cartLoad = Item.cartList(cart);
+        emit(ItemLoadedState(item: activity!, cart: cartLoad));
 
       } catch (e) {
         emit(ItemFailed());
@@ -35,7 +35,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     on<CartEvent>((event, emit) => {
       if (!cartLoad.contains(event.data)){
         cartLoad.add(event.data),
-        event.data.itemAdded = 1,
         _Service.saveitem(event.data),
       }
     });
@@ -43,7 +42,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     on<IncrementQunatity>((event, emit) => {
       cart[event.data].quantity++,
       _Service.updateitem(
-        cartLoad[event.data],
+      cartLoad[event.data],
       )
       },);
     on<DecrementQuantity>((event, emit) => {
@@ -55,11 +54,10 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
       
     });
-    on<ItemRemoveEvent>((event, emit) => {
-      cartLoad[event.data].itemAdded = 0,
-      cartLoad[event.data].quantity = 1,
+
+    on<ItemRemove>((event, emit) => {
       _Service.deleteitem(cartLoad[event.data].id),
-      cart.removeAt(event.data),
+      cartLoad.removeAt(event.data),
     });
   }
 }
