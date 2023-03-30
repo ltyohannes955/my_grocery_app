@@ -143,7 +143,15 @@ class _CartState extends State<Cart> {
                                                         setState(() {});
                                                       }), 
                                                       icon: const Icon(Icons.add_circle), 
-                                                      color: Colors.blue, iconSize: 30,),
+                                                      color: Colors.blue,),
+
+                                                      IconButton(onPressed: () {
+                                                        BlocProvider.of<ItemBloc>(context)
+                                                          .add(ItemRemove(index));
+                                                        setState(() {
+                                                          
+                                                        });
+                                                      }, icon: const Icon(Icons.delete, color: Colors.red,))
                                                       ],
                                                     ),
                                                       
